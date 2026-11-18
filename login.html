@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar — Olimpíadas de Matemática</title>
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+<div class="login">
+  <section class="side">
+    <div class="art" aria-hidden="true">π<small>a² + b² = c²</small></div>
+    <div class="brand">
+      <div class="brand-icon">🧠</div>
+      <h1>Olimpíadas<br>de Matemática</h1>
+    </div>
+    <div class="pitch">
+      <h2>Treine hoje,<br>conquiste amanhã!</h2>
+      <p>Questões, simulados e teoria para você se preparar para as Olimpíadas de Matemática.</p>
+      <div class="short-line"></div>
+    </div>
+    <div class="quote">“Grandes conquistas começam com pequenos passos de estudo.”</div>
+  </section>
+
+  <section class="form-side">
+    <div class="card">
+      <h2 id="titulo">Bem-vinda de volta!</h2>
+      <p class="sub" id="subtitulo">Entre para continuar seus estudos.</p>
+
+      <div class="tabs">
+        <button type="button" id="tabEntrar" class="on">Entrar</button>
+        <button type="button" id="tabCriar">Criar conta</button>
+      </div>
+
+      <div class="msg" id="msg"></div>
+
+      <form id="form" novalidate>
+        <div class="field hide" id="campoNome">
+          <label for="nome">Nome</label>
+          <div class="input"><input id="nome" type="text" placeholder="Como quer ser chamada?" autocomplete="name"></div>
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <div class="input"><input id="email" type="email" placeholder="voce@email.com" autocomplete="email"></div>
+        </div>
+        <div class="field">
+          <label for="senha">Senha</label>
+          <div class="input">
+            <input id="senha" type="password" placeholder="Sua senha" autocomplete="current-password">
+            <button type="button" class="eye" id="olho" aria-label="Mostrar senha">👁</button>
+          </div>
+        </div>
+        <div class="field hide" id="campoConfirma">
+          <label for="confirma">Confirmar senha</label>
+          <div class="input"><input id="confirma" type="password" placeholder="Repita a senha" autocomplete="new-password"></div>
+        </div>
+        <div class="row" id="linhaLembrar">
+          <label><input type="checkbox" id="lembrar" checked> Manter conectada</label>
+          <a href="#" id="esqueci">Esqueci a senha</a>
+        </div>
+        <button class="btn" id="enviar" type="submit">Entrar</button>
+      </form>
+
+      <p class="foot" id="rodape">Ainda não tem conta? <a id="irCriar">Criar agora</a></p>
+    </div>
+  </section>
+</div>
+
+<script>
+/* Login de demonstração: roda só no navegador (localStorage).
+   Serve para o protótipo; para um sistema real é preciso um servidor/banco de dados. */
+let modo = "entrar";
+const $ = id => document.getElementById(id);
+const store = (k, v) => { try { v === undefined ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} };
+const read = k => { try { return localStorage.getItem(k); } catch { return null; } };
+const usuarios = () => { try { return JSON.parse(read("usuarios") || "{}"); } catch { return {}; } };
+
+async function hash(t) {
+  try {
+    const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t));
+    return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join("");
+  } catch { return "p:" + t; }
+}
+function aviso(texto, ok) { const m = $("msg"); m.textContent = texto; m.className = "msg show" + (ok ? " ok" : ""); }
+function limpaAviso() { $("msg").className = "msg"; }
+
+function setModo(m) {
+  modo = m; limpaAviso();
+  const criar = m === "criar";
+  $("tabEntrar").classList.toggle("on", !criar); $("tabCriar").classList.toggle("on", criar);
+  $("campoNome").classList.toggle("hide", !criar);
+  $("campoConfirma").classList.toggle("hide", !criar);
+  $("linhaLembrar").classList.toggle("hide", criar);
+  $("titulo").textContent = criar ? "Crie sua conta" : "Bem-vinda de volta!";
+  $("subtitulo").textContent = criar ? "Leva menos de um minuto." : "Entre para continuar seus estudos.";
+  $("enviar").textContent = criar ? "Criar conta" : "Entrar";
+  $("senha").autocomplete = criar ? "new-password" : "current-password";
+  $("rodape").innerHTML = criar ? 'Já tem conta? <a id="irEntrar">Entrar</a>' : 'Ainda não tem conta? <a id="irCriar">Criar agora</a>';
+}
+$("tabEntrar").onclick = () => setModo("entrar");
+$("tabCriar").onclick = () => setModo("criar");
+$("rodape").addEventListener("click", e => {
+  if (e.target.id === "irCriar") setModo("criar");
+  if (e.target.id === "irEntrar") setModo("entrar");
+});
+$("olho").onclick = () => { const s = $("senha"); s.type = s.type === "password" ? "text" : "password"; };
+$("esqueci").onclick = e => { e.preventDefault(); aviso("Recuperação de senha ainda não está disponível neste protótipo."); };
+
+function entrar(email, nome, lembrar) {
+  const sessao = JSON.stringify({ email, nome });
+  try { (lembrar ? localStorage : sessionStorage).setItem("sessao", sessao); } catch {}
+  store("nome", nome);
+  location.href = "index.html";
+}
+
+$("form").addEventListener("submit", async e => {
+  e.preventDefault(); limpaAviso();
+  const email = $("email").value.trim().toLowerCase(), senha = $("senha").value;
+  if (!/^\S+@\S+\.\S+$/.test(email)) return aviso("Digite um e-mail válido.");
+  if (senha.length < 6) return aviso("A senha precisa ter pelo menos 6 caracteres.");
+  const users = usuarios();
+
+  if (modo === "criar") {
+    const nome = $("nome").value.trim();
+    if (!nome) return aviso("Digite seu nome.");
+    if (senha !== $("confirma").value) return aviso("As senhas não conferem.");
+    if (users[email]) return aviso("Já existe uma conta com esse e-mail.");
+    users[email] = { nome, senha: await hash(senha) };
+    store("usuarios", JSON.stringify(users));
+    entrar(email, nome, true);
+  } else {
+    const u = users[email];
+    if (!u) { setModo("criar"); $("email").value = email; return aviso("Não encontramos conta com esse e-mail neste navegador. Crie sua conta abaixo."); }
+    if (u.senha !== await hash(senha)) return aviso("Senha incorreta.");
+    entrar(email, u.nome, $("lembrar").checked);
+  }
+});
+
+/* avisa se o navegador bloqueia o armazenamento */
+try { localStorage.setItem("_t","1"); localStorage.removeItem("_t"); }
+catch { aviso("Seu navegador está bloqueando o armazenamento local, então o login não consegue salvar a conta. Abra o site por um servidor local (veja as instruções) ou use outro navegador."); }
+
+/* já logada? vai direto para o site */
+if (read("sessao") || sessionStorage.getItem("sessao")) location.replace("index.html");
+</script>
+</body>
+</html>
