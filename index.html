@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olimpíadas de Matemática</title>
+<link rel="stylesheet" href="tcc.css">
+<link rel="stylesheet" href="telas.css">
+<script>
+/* exige login */
+(function(){ var s=null; try{ s=localStorage.getItem("sessao")||sessionStorage.getItem("sessao"); }catch(e){}
+  if(!s) location.replace("login.html"); })();
+</script>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">
+      <div class="brand-icon">🧠</div>
+      <h1>Olimpíadas<br>de Matemática</h1>
+      <p>Estude&nbsp; · &nbsp;Resolva&nbsp; · &nbsp;Conquiste</p>
+      <div class="short-line"></div>
+    </div>
+    <nav aria-label="Menu principal">
+      <a data-go="inicio" class="active" href="#inicio"><span class="icon">⌂</span>Início</a>
+      <a data-go="questoes" href="#questoes"><span class="icon">▤</span>Questões</a>
+      <a data-go="simulados" href="#simulados"><span class="icon">🏆</span>Simulados</a>
+      <a data-go="teoria" href="#teoria"><span class="icon">▱</span>Teoria</a>
+      <a data-go="progresso" href="#progresso"><span class="icon">▥</span>Meu Progresso</a>
+      <a data-go="favoritos" href="#favoritos"><span class="icon">♧</span>Favoritos</a>
+      <a data-go="configuracoes" href="#configuracoes"><span class="icon">⚙</span>Configurações</a>
+    </nav>
+    <div class="quote">“Grandes conquistas<br>começam com pequenos<br>passos de estudo.”<div class="short-line"></div></div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <h2>Olá, <span id="nomeUsuario">Samyra</span>!</h2>
+        <p>Vamos continuar evoluindo nos estudos?</p>
+      </div>
+      <button class="avatar" aria-label="Perfil" data-go="configuracoes">👤</button>
+    </header>
+
+    <!-- ============ TELA: INÍCIO ============ -->
+    <div class="screen active" id="tela-inicio">
+      <div class="layout">
+        <section class="main-column">
+          <div class="hero">
+            <div class="hero-copy">
+              <h2>Treine hoje,<br>conquiste amanhã!</h2>
+              <p>Aqui você encontra questões, simulados, teoria e muito mais para se preparar para as Olimpíadas de Matemática.</p>
+            </div>
+            <div class="math-art" aria-hidden="true">π<small>a² + b² = c²<br>∞ &nbsp; △ &nbsp; x²</small></div>
+          </div>
+
+          <h2 class="section-title">Escolha por onde começar</h2>
+          <div class="cards">
+            <a class="study-card blue" data-go="questoes" href="#questoes" style="color:inherit;text-decoration:none">
+              <div class="bubble">▤</div><h3>Questões</h3>
+              <p>Resolva questões de edições anteriores e exercícios por assunto.</p><span class="arrow" style="color:#315fe2">→</span>
+            </a>
+            <a class="study-card green" data-go="simulados" href="#simulados" style="color:inherit;text-decoration:none">
+              <div class="bubble">🏆</div><h3>Simulados</h3>
+              <p>Teste seus conhecimentos com simulados no estilo da OMB.</p><span class="arrow" style="color:#174e39">→</span>
+            </a>
+            <a class="study-card yellow" data-go="teoria" href="#teoria" style="color:inherit;text-decoration:none">
+              <div class="bubble">▱</div><h3>Teoria</h3>
+              <p>Revise os principais conteúdos matemáticos.</p><span class="arrow" style="color:#17345c">→</span>
+            </a>
+            <a class="study-card red" data-go="progresso" href="#progresso" style="color:inherit;text-decoration:none">
+              <div class="bubble">▥</div><h3>Meu Progresso</h3>
+              <p>Acompanhe sua evolução e veja onde focar mais.</p><span class="arrow" style="color:#e43c48">→</span>
+            </a>
+          </div>
+
+          <div class="activity-head">
+            <h3>Últimas atividades</h3><a data-go="progresso" href="#progresso">Ver todas&nbsp; →</a>
+          </div>
+          <div class="activity-list" id="atividades">
+            <div class="activity">
+              <div class="activity-icon">▤</div><div><strong>Questões de Álgebra</strong><small>40 questões</small></div><span class="score">0%</span><span class="date">18/09/2026&nbsp; ›</span>
+            </div>
+            <div class="activity">
+              <div class="activity-icon" style="background:#fff5d9">🏆</div><div><strong>Simulado - Nível 2</strong><small>20 questões</small></div><span class="score">0%</span><span class="date">16/09/2026&nbsp; ›</span>
+            </div>
+            <div class="activity">
+              <div class="activity-icon" style="background:#e5f3ff">▱</div><div><strong>Revisão de Geometria</strong><small>40 questões</small></div><span class="score">0%</span><span class="date">14/09/2026&nbsp; ›</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="right-column">
+          <div class="side-card">
+            <h3>Seu progresso</h3>
+            <div class="progress-row">
+              <div class="ring"><span>0%</span></div>
+              <div class="progress-copy">
+                <strong>Questões resolvidas</strong><span>0 de 100</span>
+                <div class="bar"><span></span></div>
+              </div>
+            </div>
+            <h3 class="topics-title">Assuntos em destaque</h3>
+            <div class="topic" data-go="questoes" data-assunto="Aritmética" style="cursor:pointer"><span class="dot" style="background:#416be0"></span><span>Aritmética</span><b>›</b></div>
+            <div class="topic" data-go="questoes" data-assunto="Álgebra" style="cursor:pointer"><span class="dot" style="background:#299d68"></span><span>Álgebra</span><b>›</b></div>
+            <div class="topic" data-go="questoes" data-assunto="Geometria" style="cursor:pointer"><span class="dot" style="background:#9143db"></span><span>Geometria</span><b>›</b></div>
+            <div class="topic" data-go="questoes" data-assunto="Combinatória" style="cursor:pointer"><span class="dot" style="background:#ff941b"></span><span>Combinatória</span><b>›</b></div>
+            <div class="topic" data-go="questoes" data-assunto="Teoria dos Números" style="cursor:pointer"><span class="dot" style="background:#ef4147"></span><span>Teoria dos Números</span><b>›</b></div>
+          </div>
+          <div class="goal">
+            <div class="target">◎</div>
+            <div><strong>Seu objetivo é possível!</strong><p>Disciplina, prática e foco<br>te levam longe.</p><div class="short-line" style="margin:14px 0 0"></div></div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ============ TELA: QUESTÕES ============ -->
+    <div class="screen" id="tela-questoes">
+      <div class="page-head">
+        <div><h2>Questões</h2><p>Apostilas de questões de edições anteriores e por assunto.</p></div>
+        <button class="back-btn" data-go="inicio">← Voltar ao início</button>
+      </div>
+      <div class="toolbar">
+        <input class="search" type="search" placeholder="🔍  Buscar apostila..." data-busca="questoes">
+        <div class="chips" data-chips="questoes"></div>
+      </div>
+      <div class="apostilas" id="lista-questoes"></div>
+    </div>
+
+    <!-- ============ TELA: SIMULADOS ============ -->
+    <div class="screen" id="tela-simulados">
+      <div class="page-head">
+        <div><h2>Simulados</h2><p>Provas completas no estilo da OMB para testar seus conhecimentos.</p></div>
+        <button class="back-btn" data-go="inicio">← Voltar ao início</button>
+      </div>
+      <div class="toolbar">
+        <input class="search" type="search" placeholder="🔍  Buscar simulado..." data-busca="simulados">
+        <div class="chips" data-chips="simulados"></div>
+      </div>
+      <div class="apostilas" id="lista-simulados"></div>
+    </div>
+
+    <!-- ============ TELA: TEORIA ============ -->
+    <div class="screen" id="tela-teoria">
+      <div class="page-head">
+        <div><h2>Teoria</h2><p>Revise os principais conteúdos matemáticos.</p></div>
+        <button class="back-btn" data-go="inicio">← Voltar ao início</button>
+      </div>
+      <div class="toolbar">
+        <input class="search" type="search" placeholder="🔍  Buscar material..." data-busca="teoria">
+        <div class="chips" data-chips="teoria"></div>
+      </div>
+      <div class="apostilas" id="lista-teoria"></div>
+    </div>
+
+    <!-- ============ TELA: PROGRESSO ============ -->
+    <div class="screen" id="tela-progresso">
+      <div class="page-head">
+        <div><h2>Meu Progresso</h2><p>Acompanhe sua evolução e veja onde focar mais.</p></div>
+        <button class="back-btn" data-go="inicio">← Voltar ao início</button>
+      </div>
+      <div class="panel">
+        <h3>Resumo</h3>
+        <div class="stats">
+          <div class="stat"><b>0</b><span>Questões resolvidas</span></div>
+          <div class="stat"><b>0%</b><span>Taxa de acerto</span></div>
+          <div class="stat"><b>0</b><span>Simulados feitos</span></div>
+          <div class="stat"><b id="statFav">0</b><span>Favoritos</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Desempenho por assunto</h3>
+        <div id="progressoAssuntos"></div>
+      </div>
+    </div>
+
+    <!-- ============ TELA: FAVORITOS ============ -->
+    <div class="screen" id="tela-favoritos">
+      <div class="page-head">
+        <div><h2>Favoritos</h2><p>Suas apostilas marcadas com ★.</p></div>
+        <button class="back-btn" data-go="inicio">← Voltar ao início</button>
+      </div>
+      <div class="apostilas" id="lista-favoritos"></div>
+    </div>
+
+    <!-- ============ TELA: CONFIGURAÇÕES ============ -->
+    <div class="screen" id="tela-configuracoes">
+      <div class="page-head">
+        <div><h2>Configurações</h2><p>Personalize sua experiência.</p></div>
+        <button class="back-btn" data-go="inicio">← Voltar ao início</button>
+      </div>
+      <div class="panel">
+        <h3>Perfil</h3>
+        <div class="setting"><span>Seu nome</span><input type="text" id="inputNome" value="Samyra"></div>
+        <div class="setting"><span></span><button class="btn" id="salvarNome">Salvar</button></div>
+      </div>
+      <div class="panel">
+        <h3>Conta</h3>
+        <div class="setting"><span>Encerrar a sessão neste dispositivo</span><button class="btn" id="sair" style="background:#ed4b56">Sair</button></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* =====================================================================
+   ✏️  ONDE COLOCAR AS APOSTILAS
+   1. Crie uma pasta "apostilas" ao lado deste index.html e coloque os PDFs lá.
+   2. Adicione uma linha em QUESTOES / SIMULADOS / TEORIA seguindo o modelo.
+      - arquivo: caminho do PDF (ex.: "apostilas/algebra-basica.pdf").
+        Deixe "" se ainda não tiver o arquivo (o botão fica desativado).
+   ===================================================================== */
+const QUESTOES = [
+  { titulo: "Álgebra — Nível 1",            assunto: "Álgebra",            info: "40 questões", arquivo: "" },
+  { titulo: "Aritmética Básica",            assunto: "Aritmética",         info: "30 questões", arquivo: "" },
+  { titulo: "Geometria Plana",              assunto: "Geometria",          info: "40 questões", arquivo: "" },
+  { titulo: "Princípios de Contagem",       assunto: "Combinatória",       info: "25 questões", arquivo: "" },
+  { titulo: "Divisibilidade e Primos",      assunto: "Teoria dos Números", info: "30 questões", arquivo: "" },
+];
+const SIMULADOS = [
+  { titulo: "Simulado — Nível 1", assunto: "Nível 1", info: "20 questões", arquivo: "" },
+  { titulo: "Simulado — Nível 2", assunto: "Nível 2", info: "20 questões", arquivo: "" },
+  { titulo: "Simulado — Nível 3", assunto: "Nível 3", info: "20 questões", arquivo: "" },
+];
+const TEORIA = [
+  { titulo: "Resumo de Álgebra",    assunto: "Álgebra",    info: "Material de apoio", arquivo: "" },
+  { titulo: "Resumo de Geometria",  assunto: "Geometria",  info: "Material de apoio", arquivo: "" },
+];
+
+/* ===================== código das telas (não precisa mexer) ===================== */
+const DADOS = { questoes: QUESTOES, simulados: SIMULADOS, teoria: TEORIA };
+const ICONES = { questoes: "▤", simulados: "🏆", teoria: "▱" };
+const CORES = ["#5275e8", "#269b62", "#ffbd25", "#ed4b56", "#9143db", "#ff941b"];
+const filtro = { questoes: "Todos", simulados: "Todos", teoria: "Todos" };
+const busca  = { questoes: "", simulados: "", teoria: "" };
+
+function getFavs() { try { return JSON.parse(localStorage.getItem("favs") || "[]"); } catch { return []; } }
+function setFavs(f) { try { localStorage.setItem("favs", JSON.stringify(f)); } catch {} }
+const idDe = (tipo, a) => tipo + "|" + a.titulo;
+
+const COR_ASSUNTO = { "Aritmética": "#416be0", "Álgebra": "#299d68", "Geometria": "#9143db", "Combinatória": "#ff941b", "Teoria dos Números": "#ef4147", "Nível 1": "#299d68", "Nível 2": "#ff941b", "Nível 3": "#ef4147" };
+const SIMBOLO = { "Aritmética": "÷", "Álgebra": "x²", "Geometria": "△", "Combinatória": "n!", "Teoria dos Números": "ℕ" };
+const corDe = (a, i) => COR_ASSUNTO[a.assunto] || CORES[i % CORES.length];
+
+function cardHTML(tipo, a, i) {
+  const fav = getFavs().includes(idDe(tipo, a));
+  const link = a.arquivo
+    ? `<a class="open" href="${a.arquivo}" target="_blank" rel="noopener">Abrir apostila</a>`
+    : `<a class="open disabled">Em breve</a>`;
+  return `<div class="apostila" style="--c:${corDe(a, i)}">
+    <div class="cover">
+      <button class="fav ${fav ? "on" : ""}" data-fav="${idDe(tipo, a)}" aria-label="Favoritar">★</button>
+      <span class="sym">${SIMBOLO[a.assunto] || "π"}</span>
+      <span class="ico">${ICONES[tipo]}</span>
+    </div>
+    <div class="body">
+      <span class="tag">${a.assunto}</span>
+      <h3>${a.titulo}</h3>
+      <div class="meta">${a.info}</div>
+      ${link}
+    </div>
+  </div>`;
+}
+
+function renderChips(tipo) {
+  const assuntos = ["Todos", ...new Set(DADOS[tipo].map(a => a.assunto))];
+  document.querySelector(`[data-chips="${tipo}"]`).innerHTML = assuntos
+    .map(s => `<button class="chip ${filtro[tipo] === s ? "on" : ""}" style="--dot:${COR_ASSUNTO[s] || "#b8c4e6"}" data-chip="${tipo}" data-valor="${s}">${s}</button>`).join("");
+}
+
+function renderLista(tipo) {
+  const q = busca[tipo].toLowerCase();
+  const itens = DADOS[tipo].filter(a =>
+    (filtro[tipo] === "Todos" || a.assunto === filtro[tipo]) &&
+    a.titulo.toLowerCase().includes(q));
+  document.getElementById("lista-" + tipo).innerHTML = itens.length
+    ? itens.map((a, i) => cardHTML(tipo, a, i)).join("")
+    : `<div class="empty"><strong>Nada por aqui ainda</strong>Adicione apostilas na lista do código ou mude o filtro.</div>`;
+}
+
+function renderFavoritos() {
+  const favs = getFavs();
+  let html = "";
+  Object.keys(DADOS).forEach(tipo => DADOS[tipo].forEach((a, i) => {
+    if (favs.includes(idDe(tipo, a))) html += cardHTML(tipo, a, i);
+  }));
+  document.getElementById("lista-favoritos").innerHTML = html ||
+    `<div class="empty"><strong>Nenhum favorito ainda</strong>Clique na ★ de uma apostila para guardá-la aqui.</div>`;
+  document.getElementById("statFav").textContent = favs.length;
+}
+
+function renderProgresso() {
+  const cores = { "Aritmética": "#416be0", "Álgebra": "#299d68", "Geometria": "#9143db", "Combinatória": "#ff941b", "Teoria dos Números": "#ef4147" };
+  document.getElementById("progressoAssuntos").innerHTML = Object.entries(cores).map(([n, c]) =>
+    `<div class="topic" style="cursor:default"><span class="dot" style="background:${c}"></span><span>${n}</span><b style="font-size:14px;font-weight:600">0%</b></div>`).join("");
+}
+
+function renderTudo() {
+  ["questoes", "simulados", "teoria"].forEach(t => { renderChips(t); renderLista(t); });
+  renderFavoritos(); renderProgresso();
+}
+
+function go(nome) {
+  if (!document.getElementById("tela-" + nome)) nome = "inicio";
+  document.querySelectorAll(".screen").forEach(s => s.classList.toggle("active", s.id === "tela-" + nome));
+  document.querySelectorAll("nav a").forEach(a => a.classList.toggle("active", a.dataset.go === nome));
+  if (nome === "favoritos") renderFavoritos();
+  window.scrollTo({ top: 0 });
+}
+
+document.addEventListener("click", e => {
+  const fav = e.target.closest("[data-fav]");
+  if (fav) {
+    const id = fav.dataset.fav, f = getFavs();
+    setFavs(f.includes(id) ? f.filter(x => x !== id) : [...f, id]);
+    renderTudo(); return;
+  }
+  const chip = e.target.closest("[data-chip]");
+  if (chip) { filtro[chip.dataset.chip] = chip.dataset.valor; renderChips(chip.dataset.chip); renderLista(chip.dataset.chip); return; }
+
+  const alvo = e.target.closest("[data-go]");
+  if (alvo) {
+    e.preventDefault();
+    const nome = alvo.dataset.go;
+    if (alvo.dataset.assunto) { filtro.questoes = alvo.dataset.assunto; renderChips("questoes"); renderLista("questoes"); }
+    else if (alvo.classList.contains("study-card") || alvo.closest("nav")) { /* mantém filtro */ }
+    history.replaceState(null, "", "#" + nome);
+    go(nome);
+  }
+});
+
+document.querySelectorAll("[data-busca]").forEach(inp => inp.addEventListener("input", () => {
+  busca[inp.dataset.busca] = inp.value; renderLista(inp.dataset.busca);
+}));
+
+document.getElementById("sair").addEventListener("click", () => {
+  try { localStorage.removeItem("sessao"); sessionStorage.removeItem("sessao"); } catch {}
+  location.href = "login.html";
+});
+document.getElementById("salvarNome").addEventListener("click", () => {
+  const n = document.getElementById("inputNome").value.trim() || "Estudante";
+  document.getElementById("nomeUsuario").textContent = n;
+  try { localStorage.setItem("nome", n); } catch {}
+});
+try {
+  const n = localStorage.getItem("nome");
+  if (n) { document.getElementById("nomeUsuario").textContent = n; document.getElementById("inputNome").value = n; }
+} catch {}
+
+window.addEventListener("hashchange", () => go(location.hash.slice(1) || "inicio"));
+renderTudo();
+go(location.hash.slice(1) || "inicio");
+</script>
+</body>
+</html>
